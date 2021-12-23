@@ -35,7 +35,8 @@ class SimpleButtonEntityRow extends Polymer.Element {
         </td>
 
         <td class="simple-button-entity-row-td">
-            <input type="button" style="cursor: pointer;" value="[[buttonText]]" on-click='clickHandler'/>
+            <input type="button" style="cursor: pointer;" value="[[buttonText1]]" on-click='clickHandler1'/>
+            <input type="button" style="cursor: pointer;" value="[[buttonText2]]" on-click='clickHandler2'/>
         </td>
         </tr>
         </table>
@@ -57,10 +58,16 @@ class SimpleButtonEntityRow extends Polymer.Element {
         this.name = '';
     }
 
-    if ('button_text' in config) {
-        this.buttonText = config.button_text;
+    if ('button_text1' in config) {
+        this.buttonText1 = config.button_text1;
     } else {
-        this.buttonText = 'Action';
+        this.buttonText1 = 'Action';
+    }
+
+    if ('button_text2' in config) {
+        this.buttonText2 = config.button_text;
+    } else {
+        this.buttonText2 = 'Cancel';
     }
   }
 
@@ -68,9 +75,14 @@ class SimpleButtonEntityRow extends Polymer.Element {
     this._hass = hass;
   }
 
-  clickHandler(e) {
+  clickHandler1(e) {
     const service = this._config.tap_action.service.split(".")
     this._hass.callService(service[0], service[1], this._config.tap_action.service_data);
+  }
+
+  clickHandler2(e) {
+    const service = this._config.hold_action.service.split(".")
+    this._hass.callService(service[0], service[1], this._config.hold_action.service_data);
   }
 
 }
